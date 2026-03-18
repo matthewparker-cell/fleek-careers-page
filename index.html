@@ -39,10 +39,30 @@
   <style>
     html { scroll-behavior: smooth; }
 
-    /* Nav - always white, matching main site */
+    /* Nav - default state: blends into yellow hero */
     #nav {
+      background: #F8C642;
+      box-shadow: none;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    /* Nav - scrolled state: white */
+    #nav.scrolled {
       background: #FFFFFF;
       box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    }
+
+    /* Logomark: dark on yellow nav, brand yellow on white nav */
+    #nav .logomark { fill: #0F0F0F; transition: fill 0.3s ease; }
+    #nav.scrolled .logomark { fill: #F8C642; }
+
+    /* CTA button: text-only contrast on yellow, filled on white */
+    #nav-cta {
+      background: transparent;
+      color: #FFFFFF;
+    }
+    #nav.scrolled #nav-cta {
+      background: #F8C642;
+      color: #0F0F0F;
     }
 
     /* Fade in on scroll */
@@ -66,6 +86,15 @@
     .hero-section {
       background: #F8C642;
     }
+
+    /* Accordion chevron */
+    .fleek-chevron {
+      transition: transform 0.2s ease;
+    }
+    details[open] .fleek-chevron {
+      transform: rotate(180deg);
+    }
+    details summary::-webkit-details-marker { display: none; }
   </style>
 </head>
 
@@ -83,21 +112,21 @@
         <path d="M359.312 3.57898L311.461 1.40039L310.683 111.73L359.39 110.019L358.767 91.5785L329.59 92.6677L329.745 69.5591L344.606 69.0923L343.984 50.6521L330.134 51.0411V20.3852L358.378 21.708L359.312 3.57898Z" fill="black"/>
         <path d="M300.723 3.57898L252.872 1.40039L252.094 111.73L300.801 110.019L300.179 91.5785L271.001 92.6677L271.157 69.5591L286.018 69.0923L285.396 50.6521L271.546 51.0411V20.3852L299.79 21.708L300.723 3.57898Z" fill="black"/>
         <path d="M183.157 3.73491L136.784 1.47852L136.862 108.385H155.38V73.0608H178.644L178.333 54.4649L155.147 54.6984V21.008L182.146 22.1751L183.157 3.73491Z" fill="black"/>
-        <path d="M63.1787 24.7422L110.875 6.22363L92.123 40.6143L104.417 72.3604L83.5645 69.9482L74.6943 101.927L50.7305 80.374L20.3857 107.062L22.6416 72.126L0 61.1553L23.8867 52.2861L1.79004 17.4287L35.791 24.3535L40.3037 4.66797L63.1787 24.7422ZM47.1514 45.75L30.2666 38.125L42.7939 51.1963L21.4746 59.2109L44.6611 58.4326L38.5146 75.7832L50.8857 62.0898L66.4473 83.0977L59.9111 58.666L80.9971 55.9424L63.1787 52.6748L74.2275 37.0361L56.332 48.4736L55.3203 28.7881L47.1514 45.75Z" fill="#F8C642"/>
-        <path d="M9.33683 78.5843L8.48096 75.9389L13.8496 75.3164L9.33683 78.5843Z" fill="#F8C642"/>
-        <path d="M45.9839 97.1802L43.7275 103.093L46.2952 103.716L45.9839 97.1802Z" fill="#F8C642"/>
-        <path d="M54.6982 96.4023L51.5859 97.725L52.1306 91.9673L54.6982 96.4023Z" fill="#F8C642"/>
-        <path d="M92.8236 82.7084L89.0889 78.5068L94.5353 80.7632L92.8236 82.7084Z" fill="#F8C642"/>
-        <path d="M107.062 32.7563L101.071 35.9464L107.451 35.2462L107.062 32.7563Z" fill="#F8C642"/>
-        <path d="M66.3692 15.8722L64.8909 20.3072L63.646 14.7051L66.3692 15.8722Z" fill="#F8C642"/>
-        <path d="M82.9421 8.94742L79.2852 11.8263L81.5416 7.31348L82.9421 8.94742Z" fill="#F8C642"/>
-        <path d="M29.1778 9.80307L30.7339 16.261L26.688 9.64746L29.1778 9.80307Z" fill="#F8C642"/>
-        <path d="M3.34581 35.9463L5.36879 37.9693L2.17871 37.3468L3.34581 35.9463Z" fill="#F8C642"/>
-        <path d="M11.1265 49.796L11.5933 47.0728L14.939 50.1072L11.1265 49.796Z" fill="#F8C642"/>
+        <path class="logomark" d="M63.1787 24.7422L110.875 6.22363L92.123 40.6143L104.417 72.3604L83.5645 69.9482L74.6943 101.927L50.7305 80.374L20.3857 107.062L22.6416 72.126L0 61.1553L23.8867 52.2861L1.79004 17.4287L35.791 24.3535L40.3037 4.66797L63.1787 24.7422ZM47.1514 45.75L30.2666 38.125L42.7939 51.1963L21.4746 59.2109L44.6611 58.4326L38.5146 75.7832L50.8857 62.0898L66.4473 83.0977L59.9111 58.666L80.9971 55.9424L63.1787 52.6748L74.2275 37.0361L56.332 48.4736L55.3203 28.7881L47.1514 45.75Z"/>
+        <path class="logomark" d="M9.33683 78.5843L8.48096 75.9389L13.8496 75.3164L9.33683 78.5843Z"/>
+        <path class="logomark" d="M45.9839 97.1802L43.7275 103.093L46.2952 103.716L45.9839 97.1802Z"/>
+        <path class="logomark" d="M54.6982 96.4023L51.5859 97.725L52.1306 91.9673L54.6982 96.4023Z"/>
+        <path class="logomark" d="M92.8236 82.7084L89.0889 78.5068L94.5353 80.7632L92.8236 82.7084Z"/>
+        <path class="logomark" d="M107.062 32.7563L101.071 35.9464L107.451 35.2462L107.062 32.7563Z"/>
+        <path class="logomark" d="M66.3692 15.8722L64.8909 20.3072L63.646 14.7051L66.3692 15.8722Z"/>
+        <path class="logomark" d="M82.9421 8.94742L79.2852 11.8263L81.5416 7.31348L82.9421 8.94742Z"/>
+        <path class="logomark" d="M29.1778 9.80307L30.7339 16.261L26.688 9.64746L29.1778 9.80307Z"/>
+        <path class="logomark" d="M3.34581 35.9463L5.36879 37.9693L2.17871 37.3468L3.34581 35.9463Z"/>
+        <path class="logomark" d="M11.1265 49.796L11.5933 47.0728L14.939 50.1072L11.1265 49.796Z"/>
       </svg>
     </a>
 
-    <a href="#roles" class="bg-brand text-ink font-bold text-sm px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity">
+    <a id="nav-cta" href="#roles" class="font-bold text-sm px-5 py-2.5 rounded-lg hover:opacity-90 transition-all duration-300">
       View open roles
     </a>
   </nav>
@@ -122,7 +151,7 @@
 
       <!-- Subhead -->
       <p class="text-xl sm:text-2xl text-ink/70 max-w-xl mb-10 leading-relaxed">
-        A $250 billion industry still runs on WhatsApp. We're the company changing it, with AI.
+        A $250 billion wholesale secondhand market still runs on WhatsApp. Fleek is the marketplace changing it, powered by AI.
       </p>
 
       <!-- CTAs -->
@@ -181,7 +210,7 @@
   <section id="story" class="py-24 px-6 bg-white">
     <div class="max-w-5xl mx-auto fade-in">
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
         <!-- Copy -->
         <div>
           <p class="text-brand text-sm font-semibold tracking-widest uppercase mb-4">The problem</p>
@@ -213,9 +242,19 @@
               <div class="text-ink-light text-xs mt-1">returns to market</div>
             </div>
           </div>
+        </div>
 
-          <!-- Environmental impact -->
-          <div class="bg-brand rounded-2xl p-5">
+        <div class="flex flex-col">
+          <div class="relative">
+            <img src="assets/bales.jpg" alt="Bales of secondhand clothing in a sorting warehouse" class="w-full h-[420px] object-cover rounded-2xl" />
+            <div class="absolute bottom-4 left-4 bg-brand rounded-xl px-5 py-3 shadow-lg">
+              <div class="text-ink font-black text-xl">9 million items</div>
+              <div class="text-ink/70 text-xs font-medium">saved from landfill since 2022</div>
+            </div>
+          </div>
+
+          <!-- Environmental impact - aligned with grey stat boxes on left -->
+          <div class="bg-brand rounded-2xl p-5 mt-6">
             <p class="text-ink/60 text-xs uppercase tracking-widest font-semibold mb-3">Our impact since 2022</p>
             <div class="flex flex-wrap gap-6">
               <div>
@@ -233,15 +272,6 @@
             </div>
           </div>
         </div>
-
-        <div class="relative">
-          <img src="assets/bales.jpg" alt="Bales of secondhand clothing in a sorting warehouse" class="w-full h-[420px] object-cover rounded-2xl" />
-          <div class="absolute bottom-4 left-4 bg-brand rounded-xl px-5 py-3 shadow-lg">
-            <div class="text-ink font-black text-xl">9 million items</div>
-            <div class="text-ink/70 text-xs font-medium">saved from landfill since 2022</div>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -257,7 +287,7 @@
         The world's first LLM<br/>fine-tuned on secondhand fashion.
       </h2>
       <p class="text-ink-light text-lg max-w-2xl mb-12 leading-relaxed">
-        FleekSort grades, prices, and catalogues inventory from a single photo, in 6 seconds. It's trained on the world's largest secondhand fashion dataset, and that dataset grows with every transaction on the platform.
+        FleekSort grades, prices, and catalogues inventory from a single photo, in 6 seconds. It's trained on the world's largest secondhand fashion dataset, and that dataset grows with every transaction on the platform. Trusted grades are what make the marketplace work: buyers across the US, Europe, Australia, and Japan can source at scale because they know exactly what they're getting before it ships.
       </p>
 
       <!-- Product UI (HTML recreation - swap for real screenshot) -->
@@ -394,30 +424,30 @@
   <section class="py-24 px-6 bg-ink">
     <div class="max-w-5xl mx-auto fade-in">
       <p class="text-brand text-sm font-semibold tracking-widest uppercase mb-6">Why join</p>
-      <blockquote class="text-3xl sm:text-4xl md:text-5xl font-black leading-tight text-white mb-16 max-w-3xl">
-        "Like joining <span class="text-brand">Shopify before merchants went online,</span> or <span class="text-brand">Stripe before payments went digital.</span>"
-      </blockquote>
+      <p class="text-3xl sm:text-4xl md:text-5xl font-black leading-tight text-white mb-16 max-w-3xl">
+        Second-hand is becoming the first choice. <span class="text-brand">We're building the marketplace that makes it possible at scale.</span>
+      </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
         <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
           <div class="text-brand font-black text-3xl mb-4">01</div>
-          <h3 class="text-white font-bold text-lg mb-2">Category creation</h3>
-          <p class="text-white/60 leading-relaxed">You're writing the playbook for a $250B+ industry that has never been digitised. No existing playbooks. That's the point.</p>
+          <h3 class="text-white font-bold text-lg mb-2">Build the infrastructure layer</h3>
+          <p class="text-white/60 leading-relaxed">A $250B wholesale industry has never had a proper marketplace. You're building it from the ground up: the technology, the supply, the market itself.</p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
           <div class="text-brand font-black text-3xl mb-4">02</div>
-          <h3 class="text-white font-bold text-lg mb-2">Real AI, production scale</h3>
-          <p class="text-white/60 leading-relaxed">FleekSort is a fine-tuned multimodal model solving a genuinely novel classification problem. Not a demo. Production, daily, at commercial scale.</p>
+          <h3 class="text-white font-bold text-lg mb-2">Work that matters</h3>
+          <p class="text-white/60 leading-relaxed">Fashion is the third highest polluting industry in the world. We're here to change that. We've saved 9 million items from landfill since 2022, and the numbers accelerate as you build.</p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
           <div class="text-brand font-black text-3xl mb-4">03</div>
-          <h3 class="text-white font-bold text-lg mb-2">Measurable impact</h3>
-          <p class="text-white/60 leading-relaxed">9 million items kept from landfill. The numbers accelerate as you build. You can see what you're building in the world.</p>
+          <h3 class="text-white font-bold text-lg mb-2">Work on AI, with AI, ahead of it</h3>
+          <p class="text-white/60 leading-relaxed">You'll build real AI products and use AI to do your best work every day. We expect it in interviews. Your role will look different in 6 months. We want people energised by that, not unsettled by it.</p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
           <div class="text-brand font-black text-3xl mb-4">04</div>
-          <h3 class="text-white font-bold text-lg mb-2">AI-first from day one</h3>
-          <p class="text-white/60 leading-relaxed">We hire 10x-ers through AI. In our interviews, AI tools are expected. Your role will look different in 6 months. We want people energised by that.</p>
+          <h3 class="text-white font-bold text-lg mb-2">Global from day one</h3>
+          <p class="text-white/60 leading-relaxed">Customers in the US, Australia, Japan, and across Europe. Suppliers in Pakistan, India, and Africa. The supply chain you're fixing is complex and global, and you'll touch all of it.</p>
         </div>
       </div>
 
@@ -443,7 +473,7 @@
         <div class="bg-white border border-gray-200 rounded-2xl p-7 hover:border-brand transition-colors">
           <div class="text-brand text-2xl mb-4">◎</div>
           <h3 class="text-ink font-bold mb-2">Absolute Ownership</h3>
-          <p class="text-ink-light text-sm leading-relaxed">The buck stops with you. The job isn't done until the job is done.</p>
+          <p class="text-ink-light text-sm leading-relaxed">Own your work end to end. Take it from problem to done, and take pride in the outcome.</p>
         </div>
         <div class="bg-white border border-gray-200 rounded-2xl p-7 hover:border-brand transition-colors">
           <div class="text-brand text-2xl mb-4">◈</div>
@@ -562,6 +592,93 @@
 
 
   <!-- ====================================================
+       WORKING HERE - Expanders
+  ==================================================== -->
+  <section class="py-16 px-6 bg-off-white border-t border-gray-200">
+    <div class="max-w-5xl mx-auto fade-in">
+      <p class="text-brand text-sm font-semibold tracking-widest uppercase mb-6">Working here</p>
+
+      <div class="space-y-3">
+
+        <!-- Working pattern -->
+        <details class="bg-white border border-gray-200 rounded-2xl overflow-hidden group">
+          <summary class="flex items-center justify-between px-7 py-5 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+            <span class="text-ink font-bold text-lg">Working pattern</span>
+            <svg class="fleek-chevron w-5 h-5 text-ink-light flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="px-7 pb-7 pt-1 border-t border-gray-100">
+            <p class="text-ink-light leading-relaxed mb-4 mt-5">We're building something genuinely hard, and we do it best together. Our Shoreditch office is where the energy is: quick decisions, real collaboration, and a team that actually knows each other. One day at home for deep work. On average, people are in 3-4 days a week.</p>
+            <p class="text-ink-light leading-relaxed">If you do your best work around people who move fast and care about what they're building, you'll feel at home here.</p>
+          </div>
+        </details>
+
+        <!-- Interview process -->
+        <details class="bg-white border border-gray-200 rounded-2xl overflow-hidden group">
+          <summary class="flex items-center justify-between px-7 py-5 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+            <span class="text-ink font-bold text-lg">Our interview process</span>
+            <svg class="fleek-chevron w-5 h-5 text-ink-light flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="px-7 pb-7 pt-1 border-t border-gray-100">
+            <p class="text-ink-light leading-relaxed mb-6 mt-5">We want to figure out if we're right for each other. Every stage is designed so you leave knowing more about us, and we know more about how you work. We aim to move quickly and keep you in the loop throughout.</p>
+
+            <!-- Stages -->
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-4">
+                <div class="w-7 h-7 rounded-full bg-brand flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span class="text-ink font-black text-xs">1</span>
+                </div>
+                <div>
+                  <div class="text-ink font-semibold text-sm mb-0.5">Intro call with our recruiter <span class="text-ink-light font-normal">— 30 mins</span></div>
+                  <div class="text-ink-light text-sm leading-relaxed">We'll tell you honestly about the role, the stage we're at, and what joining right now looks like. You tell us what you're looking for.</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-7 h-7 rounded-full bg-brand flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span class="text-ink font-black text-xs">2</span>
+                </div>
+                <div>
+                  <div class="text-ink font-semibold text-sm mb-0.5">Hiring manager conversation <span class="text-ink-light font-normal">— 45-60 mins</span></div>
+                  <div class="text-ink-light text-sm leading-relaxed">A genuine conversation about how you think, what you've built, and what you're proud of. We're curious about your approach.</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-7 h-7 rounded-full bg-brand flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span class="text-ink font-black text-xs">3</span>
+                </div>
+                <div>
+                  <div class="text-ink font-semibold text-sm mb-0.5">Case study on site + meet the team <span class="text-ink-light font-normal">— Half day</span></div>
+                  <div class="text-ink-light text-sm leading-relaxed">A practical exercise relevant to the role at our Shoreditch office, followed by time with the people you'd be working with. Bring your questions.</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-7 h-7 rounded-full bg-brand flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span class="text-ink font-black text-xs">4</span>
+                </div>
+                <div>
+                  <div class="text-ink font-semibold text-sm mb-0.5">Offer</div>
+                  <div class="text-ink-light text-sm leading-relaxed">If it's a yes, we move quickly. We'll be direct about timeline and next steps at every stage.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Claude Code callout -->
+            <div class="bg-brand rounded-2xl p-6">
+              <div class="text-ink font-black text-lg mb-2">Every candidate gets Claude Code.</div>
+              <p class="text-ink/75 text-sm leading-relaxed">We give full access to Claude Code to every candidate who wants it, for the duration of our process. We know not everyone has it. We want you to come away from this process more AI-enabled than when you started.</p>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================================================
        OPEN ROLES - Ashby Posting API
   ==================================================== -->
   <section id="roles" class="py-24 px-6 bg-white">
@@ -660,6 +777,21 @@
         });
       }, { threshold: 0.08 });
       document.querySelectorAll('.fade-in').forEach(function(el) { io.observe(el); });
+    })();
+  </script>
+
+  <!-- Nav scroll state -->
+  <script>
+    (function() {
+      var nav = document.getElementById('nav');
+      var threshold = 50;
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > threshold) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
     })();
   </script>
 
